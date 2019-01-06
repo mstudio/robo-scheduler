@@ -21,8 +21,12 @@ RTC_DS3231 rtc;
 Adafruit_7segment matrix = Adafruit_7segment();
 
 const char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+<<<<<<< HEAD
 
 #define NUM_ALARMS 3;
+=======
+#define NUM_ALARMS 3
+>>>>>>> cde471eec2c0b4a8bd1666b0e381069584f4d4e5
 
 const int times[NUM_ALARMS][2] = {{10, 3}, {20, 51}, {15, 10}};
 
