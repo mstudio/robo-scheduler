@@ -7,7 +7,7 @@
 // Library or LED
 #include <Adafruit_GFX.h>
 
-// Library for LED
+// Library for LED Backpack
 #include "Adafruit_LEDBackpack.h"
 
 // Library for eMic2 which controls time
@@ -24,7 +24,7 @@ const char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "
 
 #define NUM_ALARMS 3
 
-const int times[NUM_ALARMS][2] = {{10, 3}, {17, 14}, {15, 10}};
+const int times[NUM_ALARMS][2] = {{10, 3}, {20, 51}, {15, 10}};
 
 const String messages[NUM_ALARMS] = {"hello there lady", "Pack your snacks. now. okaaaaayee. I am a ninja. Huzzah.", "whats your name"};
 
@@ -37,9 +37,9 @@ Emic2TtsModule emic2TtsModule = Emic2TtsModule(&emic2Serial);
 void setup () {
 
   // RTC Setup
-  #ifndef ESP8266
-    while (!Serial); // for Leonardo/Micro/Zero
-  #endif
+#ifndef ESP8266
+  while (!Serial); // for Leonardo/Micro/Zero
+#endif
 
   Serial.begin(9600);
 
@@ -60,11 +60,11 @@ void setup () {
   }
 
   // LED Setup
-  #ifndef __AVR_ATtiny85__
-    Serial.begin(9600);
-    Serial.println("7 Segment Backpack Test");
-  #endif
-    matrix.begin(0x70);
+#ifndef __AVR_ATtiny85__
+  Serial.begin(9600);
+  Serial.println("7 Segment Backpack Test");
+#endif
+  matrix.begin(0x70);
 
   // Audio Setup
   Serial.print(F("Initializing Emic..."));
@@ -79,7 +79,7 @@ void setup () {
   //emic2TtsModule.say("Alex go do somthing you hate being miserble bilds character ");
   emic2TtsModule.say("calvin go do somthing you hate. being miserble builds character ");
   Serial.print(F("OK"));
-  
+
 }
 
 /**gdxdsdsf
@@ -156,43 +156,47 @@ void writeTimeToLED(DateTime now) {
   matrix.writeDisplay();
 }
 
+/**
+ * Pronounce the actual message audio using emic2 module.
+ * Then wait 1 minute so that the message does not repeat on the next loop.
+ */
 void sayMessage(String message) {
   Serial.print("say message: ");
   Serial.print(message);
   emic2TtsModule.say(message);
 
-  delay(30000);
+  delay(60000);
 }
 
+/**
+ * Turns current hour and minute into text, e.g. 17:03 -> "5 oh 3";
+ */
+String getTimeMessage(DateTime now) {
+  const String messageHour = (now.hour() > 12) ? String(now.hour() - 12) : String(now.hour());
+  const String messageMin = (now.minute() < 10) ? "oh " + String(now.minute()) : String(now.minute());
+  const String timeMessage = "It is" + messageHour + " " + messageMin + ".";
+  return timeMessage;
+}
+
+/**
+ * Loops through times array and looks for an hour/minute match.
+ * If found, plays the appropriate message.
+ */
 void checkAlarms(DateTime now) {
   for (int i = 0; i < NUM_ALARMS; i++) {
-    Serial.print("index:");
-    Serial.print(i);
-    Serial.println();
 
+    // hour and minute in array
     const int h = times[i][0];
     const int m = times[i][1];
-    
 
+    // if current hour and minute match what's in the array, say the time and message.
     if (h == now.hour() && m == now.minute()) {
       Serial.print("** FOUND HOUR AND MINUTE");
       Serial.println();
       const String message = messages[i];
-      const String messageHour = (now.hour() > 12) ? String(now.hour() - 12) : String(now.hour());
-      const String messageMin = (now.minute() < 10) ? "oh " + String(now.minute()) : String(now.minute());
-       
-      
-      const String fmessage = "It is" + messageHour + " " + messageMin + "." + message;
-      sayMessage(fmessage);
+      const String timeMessage = getTimeMessage(now);
+      sayMessage(timeMessage + message);
     }
-
-    
-    Serial.print("time: ");
-    Serial.print(h);
-    Serial.print(m);
-    Serial.println();
-    Serial.print("--------------");
-    Serial.println();
   }
 }
 
