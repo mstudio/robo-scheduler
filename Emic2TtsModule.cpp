@@ -182,3 +182,4 @@ void Emic2TtsModule::sendTerminatorAndWait() {
   
   while (_serialPort->read() != ':');
 }
+
