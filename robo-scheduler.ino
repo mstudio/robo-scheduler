@@ -34,23 +34,43 @@ const int emic2TxPin = 6;
 SoftwareSerial emic2Serial = SoftwareSerial(emic2RxPin, emic2TxPin);
 Emic2TtsModule emic2TtsModule = Emic2TtsModule(&emic2Serial);
 
+const int buttonAPin = 2;
+const int ledPin =  13;
+int buttonAState = 0;
+
+// Jokes
+// Define total number of jokes
+#define NUM_JOKES 4
+
+const String joke1 = "Knock knock.            Stan.                 Stan back, I'm coming in!";
+const String joke2 = "Knock knock.            Funnel.               The funnel start once you let me in.";
+const String joke3 = "Knock knock.            Garden                Stop garden the door and let me in.";
+const String joke4 = "Knock knock.            I'm                   Don't you know you're own name?";
+//const String joke5 = "Knock knock.            Hammond               Let's make some hammond eggs for breakfast";
+
+
 void setup () {
 
   Serial.begin(9600);
 
   delay(1000); // wait for console opening
 
+  // initialize the LED pin as an output for testing button A:
+  pinMode(ledPin, OUTPUT);
+  // initialize the pushbutton pin as an input for buttonA:
+  pinMode(buttonAPin, INPUT);
+
   setupRTC();
 
   setupLED();
 
-  setupAudio();  
+  setupAudio();
 }
 
 /**
- * Loops through times array and looks for an hour/minute match.
- * If found, plays the appropriate message.
- */
+   Loops through times array and looks for an hour/minute match.
+   If found, plays the appropriate message.
+*/
 void checkAlarms(DateTime now) {
   for (int i = 0; i < NUM_ALARMS; i++) {
 
@@ -79,6 +99,19 @@ void loop () {
 
   checkAlarms(now);
 
-  delay(1000);
+  // read the state of the pushbutton value:
+  buttonAState = digitalRead(buttonAPin);
+
+  // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
+  if (buttonAState == HIGH) {
+    // turn LED on:
+    digitalWrite(ledPin, HIGH);
+    tellAJoke(now);
+  } else {
+    // turn LED off:
+    digitalWrite(ledPin, LOW);
+  }
+
+  delay(100);
 }
 
