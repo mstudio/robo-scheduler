@@ -44,7 +44,7 @@ void logTime(DateTime now) {
   Serial.print('/');
   Serial.print(now.day(), DEC);
   Serial.print(" (");
-  Serial.print(daysOfTheWeek[now.dayOfTheWeek()]);
+  //Serial.print(daysOfTheWeek[now.dayOfTheWeek()]);
   Serial.print(") ");
   Serial.print(now.hour(), DEC);
   Serial.print(':');

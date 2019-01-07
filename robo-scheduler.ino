@@ -17,16 +17,16 @@ RTC_DS3231 rtc;
 // 7 Segment LED module
 Adafruit_7segment matrix = Adafruit_7segment();
 
-const char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+//const char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
 // Define total number of alarms
-#define NUM_ALARMS 3
+#define NUM_ALARMS 5
 
 // Define times of alarms (hour and minute)
-const int times[NUM_ALARMS][2] = {{10, 3}, {20, 51}, {15, 10}};
+const int times[NUM_ALARMS][2] = {{7, 30}, {8, 16}, {8, 15}, {8, 13}, {8, 14}};
 
 // Define message of alarms
-const String messages[NUM_ALARMS] = {"hello there lady", "Pack your snacks. now. okaaaaayee. I am a ninja. Huzzah.", "whats your name"};
+const String messages[NUM_ALARMS] = {"Wake up and eat breakfast", "Are you dressed for school. Get dressed.", "Is your lunch packed dad", "Dad did you pack your snack?", "Get ready for the bus Alex. do it! do it now!"};
 
 // Emic 2 Globals
 const int emic2RxPin = 5;
@@ -42,12 +42,12 @@ int buttonAState = 0;
 // Define total number of jokes
 #define NUM_JOKES 4
 
-const String joke1 = "Knock knock.            Stan.                 Stan back, I'm coming in!";
-const String joke2 = "Knock knock.            Funnel.               The funnel start once you let me in.";
-const String joke3 = "Knock knock.            Garden                Stop garden the door and let me in.";
-const String joke4 = "Knock knock.            I'm                   Don't you know you're own name?";
-//const String joke5 = "Knock knock.            Hammond               Let's make some hammond eggs for breakfast";
+const String joke1 = "Knock knock .Stan    . Stan back, I'm coming in!";
+const String joke2 = "Knock knock .Funnel   .The funnel start once you let me in.";
+const String joke3 = "Knock knock .Garden    .Stop garden the door and let me in.";
+const String joke4 = "Knock knock .I'm    .Don't you know you're own name?";
 
+//#define JOKER "alsdkfjsdlkfas flk flkdjf lksdjf alksdfj klsdf alksdf asdfkd jflkas dfjasd; alkdfj adslkfj dskfajsdlksdj fldskjf slk;dfj lsdk;fj alsdkfjasdlkf jaslkdfj a"
 
 void setup () {
 

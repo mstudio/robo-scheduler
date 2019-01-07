@@ -11,9 +11,26 @@ void setupAudio() {
   emic2TtsModule.setWordsPerMinute(250);
   emic2TtsModule.setVoice(1);
   //emic2TtsModule.playSingingDemo();
+  //emic2TtsModule.playSpanishDemo();
+  emic2TtsModule.setLanguage(0);
+  //emic2TtsModule.setLanguage(2); // latin spanish
   //emic2TtsModule.say("Alex go do somthing you hate being miserble bilds character ");
-  //emic2TtsModule.say("Alex go do somthing you hate. being miserble builds character ");
+  //emic2TtsModule.say("Buenos días ");
   emic2TtsModule.say("Ready. All Systems go.");
+/*
+  emic2TtsModule.say("Ok. I'm going to walk away now.");
+  emic2TtsModule.setVolume(5);
+  emic2TtsModule.say("I'm walking away");
+  emic2TtsModule.setVolume(0);
+  emic2TtsModule.say("See you later.");
+  emic2TtsModule.setVolume(-5);
+  emic2TtsModule.say("Bye");
+  emic2TtsModule.setVolume(-10);
+  emic2TtsModule.say("Later.");
+  emic2TtsModule.setVolume(-15);
+  emic2TtsModule.say("Ok. I'm gone.");
+  emic2TtsModule.setVolume(10);
+*/
   Serial.print(F("emic2 OK"));
 
 }
@@ -70,8 +87,33 @@ void tellAJoke(DateTime now) {
   emic2TtsModule.say("Here is a joke for you.");
   //delay(3000);
   emic2TtsModule.say(joke);
-  
-  
+
+  const String laugh1 = "ha ha ha ha ha";
+  const String laugh2 = "hee hee hee";
+  const String laugh3 = "that was so funny";
+  const String laugh4 = "that what hilarious";
+
+  delay(300);
+
+  int randomLaughNumber = random(4) + 1;
+
+
+  String laugh = laugh1;
+  if (randomLaughNumber == 2) {
+    laugh = laugh2;
+  }
+  if (randomLaughNumber == 3) {
+    laugh = laugh3;
+  }
+  if (randomLaughNumber == 4) {
+    laugh = laugh4;
+  }
+
+  emic2TtsModule.say(laugh);
+
+
+
+
 
 
 }
