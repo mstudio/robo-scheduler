@@ -29,14 +29,16 @@ const int times[NUM_ALARMS][2] = {{7, 30}, {8, 16}, {8, 15}, {8, 13}, {8, 14}};
 const String messages[NUM_ALARMS] = {"Wake up and eat breakfast", "Are you dressed for school. Get dressed.", "Is your lunch packed dad", "Dad did you pack your snack?", "Get ready for the bus Alex. do it! do it now!"};
 
 // Emic 2 Globals
-const int emic2RxPin = 5;
-const int emic2TxPin = 6;
+const int emic2RxPin = 52;
+const int emic2TxPin = 50;
 SoftwareSerial emic2Serial = SoftwareSerial(emic2RxPin, emic2TxPin);
 Emic2TtsModule emic2TtsModule = Emic2TtsModule(&emic2Serial);
 
 const int buttonAPin = 2;
+const int buttonAnswerPin = 4;
 const int ledPin =  13;
 int buttonAState = 0;
+int buttonAnswerState = 0;
 
 // Jokes
 // Define total number of jokes
@@ -47,7 +49,10 @@ const String joke2 = "Knock knock .Funnel   .The funnel start once you let me in
 const String joke3 = "Knock knock .Garden    .Stop garden the door and let me in.";
 const String joke4 = "Knock knock .I'm    .Don't you know you're own name?";
 
-//#define JOKER "alsdkfjsdlkfas flk flkdjf lksdjf alksdfj klsdf alksdf asdfkd jflkas dfjasd; alkdfj adslkfj dskfajsdlksdj fldskjf slk;dfj lsdk;fj alsdkfjasdlkf jaslkdfj a"
+// match
+int mathNumberA;
+int mathNumberB;
+int mathAnswer;
 
 void setup () {
 
@@ -58,7 +63,8 @@ void setup () {
   // initialize the LED pin as an output for testing button A:
   pinMode(ledPin, OUTPUT);
   // initialize the pushbutton pin as an input for buttonA:
-  pinMode(buttonAPin, INPUT);
+  pinMode(buttonAPin, INPUT_PULLUP);
+  pinMode(buttonAnswerPin, INPUT_PULLUP);
 
   setupRTC();
 
@@ -101,16 +107,17 @@ void loop () {
 
   // read the state of the pushbutton value:
   buttonAState = digitalRead(buttonAPin);
-
-  // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
-  if (buttonAState == HIGH) {
-    // turn LED on:
-    digitalWrite(ledPin, HIGH);
-    tellAJoke(now);
-  } else {
-    // turn LED off:
-    digitalWrite(ledPin, LOW);
+  if (buttonAState == LOW) {
+    tellMath("plus", 10);
   }
+
+  buttonAnswerState = digitalRead(buttonAnswerPin);
+  Serial.println("button state");
+  Serial.println(buttonAState);
+  if (buttonAnswerState == LOW) {
+    tellAnswer();
+  }
+
 
   delay(100);
 }
