@@ -19,19 +19,19 @@ void setupAudio()
   //emic2TtsModule.say("Buenos días ");
   emic2TtsModule.say("Ready. All Systems go.");
   /*
-  emic2TtsModule.say("Ok. I'm going to walk away now.");
-  emic2TtsModule.setVolume(5);
-  emic2TtsModule.say("I'm walking away");
-  emic2TtsModule.setVolume(0);
-  emic2TtsModule.say("See you later.");
-  emic2TtsModule.setVolume(-5);
-  emic2TtsModule.say("Bye");
-  emic2TtsModule.setVolume(-10);
-  emic2TtsModule.say("Later.");
-  emic2TtsModule.setVolume(-15);
-  emic2TtsModule.say("Ok. I'm gone.");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-  emic2TtsModule.setVolume(10);
-*/
+    emic2TtsModule.say("Ok. I'm going to walk away now.");
+    emic2TtsModule.setVolume(5);
+    emic2TtsModule.say("I'm walking away");
+    emic2TtsModule.setVolume(0);
+    emic2TtsModule.say("See you later.");
+    emic2TtsModule.setVolume(-5);
+    emic2TtsModule.say("Bye");
+    emic2TtsModule.setVolume(-10);
+    emic2TtsModule.say("Later.");
+    emic2TtsModule.setVolume(-15);
+    emic2TtsModule.say("Ok. I'm gone.");
+    emic2TtsModule.setVolume(10);
+  */
   Serial.print(F("emic2 OK"));
 }
 
@@ -59,18 +59,9 @@ String getTimeMessage(DateTime now)
   return timeMessage;
 }
 
-void tellAddition()
-{
-  const int limit = 5;
-  mathNumberA = random(limit + 1);
-  mathNumberB = random(limit + 1);
-  mathAnswer = mathNumberA + mathNumberB;
-  const String message = "What is " + String(mathNumberA) + " plus " + String(mathNumberB);
-  emic2TtsModule.say(message);
-}
 /**
- * operator: plus, minus, times 
- */
+   operator: plus, minus, times, divided by
+*/
 void tellMath(String mathType, int limit)
 {
   emic2TtsModule.setWordsPerMinute(110);
@@ -82,7 +73,6 @@ void tellMath(String mathType, int limit)
     // minus / subtraction
     if (mathNumberB > mathNumberA)
     {
-      emic2TtsModule.setVoice(1);
       int temp = mathNumberA;
       mathNumberA = mathNumberB;
       mathNumberB = temp;
@@ -92,15 +82,20 @@ void tellMath(String mathType, int limit)
   else if (mathType == "times")
   {
     // times / multiplication
-    emic2TtsModule.setVoice(2);
     mathAnswer = mathNumberA * mathNumberB;
+  }
+  else if (mathType == "divided by")
+  {
+    // divided by / division
+    int tempAnswer = mathNumberA * mathNumberB;
+    mathNumberA = tempAnswer;
   }
   else
   {
     // plus / addition
-    emic2TtsModule.setVoice(3);
     mathAnswer = mathNumberA + mathNumberB;
   }
+  answer = "The answer is " + String(mathAnswer);
   const String message = "What is " + String(mathNumberA) + " " + mathType + " " + String(mathNumberB);
   emic2TtsModule.say(message);
 
@@ -109,8 +104,18 @@ void tellMath(String mathType, int limit)
 
 void tellAnswer() {
   emic2TtsModule.setWordsPerMinute(110);
-  const String message = "The answer is " + String(mathAnswer);
-  emic2TtsModule.say(message);
+  emic2TtsModule.say(answer);
+}
+
+void tellRiddle() {
+  if (riddleCount >= NUM_RIDDLES - 1) {
+    riddleCount = 0;
+  } else {
+    riddleCount ++;
+  }
+  answer = String(riddles[riddleCount][1]);
+  String riddleMessage = String(riddles[riddleCount][0]);
+  emic2TtsModule.say(riddleMessage);
 }
 
 void tellAJoke(DateTime now)

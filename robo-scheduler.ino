@@ -34,10 +34,18 @@ const int emic2TxPin = 50;
 SoftwareSerial emic2Serial = SoftwareSerial(emic2RxPin, emic2TxPin);
 Emic2TtsModule emic2TtsModule = Emic2TtsModule(&emic2Serial);
 
-const int buttonAPin = 2;
-const int buttonAnswerPin = 4;
+const int buttonPlusPin = 2;
+const int buttonMinusPin = 3;
+const int buttonTimesPin = 4;
+const int buttonDivideByPin = 5;
+const int buttonRiddlePin = 6;
+const int buttonAnswerPin = 7;
 const int ledPin =  13;
-int buttonAState = 0;
+int buttonPlusState = 0;
+int buttonMinusState = 0;
+int buttonTimesState = 0;
+int buttonDivideByState = 0;
+int buttonRiddleState = 0;
 int buttonAnswerState = 0;
 
 // Jokes
@@ -53,6 +61,18 @@ const String joke4 = "Knock knock .I'm    .Don't you know you're own name?";
 int mathNumberA;
 int mathNumberB;
 int mathAnswer;
+String answer;
+
+// Riddles
+
+#define NUM_RIDDLES 2
+
+int riddleCount = 0;
+
+const String r1[2] = {"riddle a", "answer a"};
+const String r2[2] = {"riddle b", "answer b"};
+
+extern String riddles[NUM_RIDDLES][2] = {r1, r2};
 
 void setup () {
 
@@ -60,10 +80,16 @@ void setup () {
 
   delay(1000); // wait for console opening
 
+  randomSeed(analogRead(0));
+
   // initialize the LED pin as an output for testing button A:
   pinMode(ledPin, OUTPUT);
   // initialize the pushbutton pin as an input for buttonA:
-  pinMode(buttonAPin, INPUT_PULLUP);
+  pinMode(buttonPlusPin, INPUT_PULLUP);
+  pinMode(buttonMinusPin, INPUT_PULLUP);
+  pinMode(buttonTimesPin, INPUT_PULLUP);
+  pinMode(buttonDivideByPin, INPUT_PULLUP);
+  pinMode(buttonRiddlePin, INPUT_PULLUP);
   pinMode(buttonAnswerPin, INPUT_PULLUP);
 
   setupRTC();
@@ -71,6 +97,9 @@ void setup () {
   setupLED();
 
   setupAudio();
+
+  shuffleRiddles();
+
 }
 
 /**
@@ -106,19 +135,37 @@ void loop () {
   checkAlarms(now);
 
   // read the state of the pushbutton value:
-  buttonAState = digitalRead(buttonAPin);
-  if (buttonAState == LOW) {
+  buttonPlusState = digitalRead(buttonPlusPin);
+  if (buttonPlusState == LOW) {
     tellMath("plus", 10);
   }
 
+  buttonMinusState = digitalRead(buttonMinusPin);
+  if (buttonMinusState == LOW) {
+    tellMath("minus", 10);
+  }
+
+  buttonTimesState = digitalRead(buttonTimesPin);
+  if (buttonTimesState == LOW) {
+    tellMath("times", 11);
+  }
+
+  buttonDivideByState = digitalRead(buttonDivideByPin);
+  if (buttonDivideByState == LOW) {
+    tellMath("divide by", 10);
+  }
+
+  buttonRiddleState = digitalRead(buttonRiddlePin);
+  if (buttonRiddleState == LOW) {
+    tellRiddle();
+  }
+
   buttonAnswerState = digitalRead(buttonAnswerPin);
-  Serial.println("button state");
-  Serial.println(buttonAState);
   if (buttonAnswerState == LOW) {
     tellAnswer();
   }
 
 
-  delay(100);
+  delay(10);
 }
 
