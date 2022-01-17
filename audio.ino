@@ -10,9 +10,20 @@ void setupAudio()
   emic2TtsModule.init();
   emic2TtsModule.setVolume(10);
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
-  emic2TtsModule.setVoice(voiceNumber);
   emic2TtsModule.setLanguage(0);
-  emic2TtsModule.say("Ready. All Systems go.");
+  emic2TtsModule.setVoice(3);
+  emic2TtsModule.say("Booting up. Checking system for");
+  emic2TtsModule.setVoice(1);
+  emic2TtsModule.say("Power");
+  emic2TtsModule.setVoice(3);
+  emic2TtsModule.say("Checking system for");
+  emic2TtsModule.setVoice(1);
+  emic2TtsModule.say("Memory.");
+  emic2TtsModule.setVoice(3);
+  emic2TtsModule.say("Checking system for");
+  emic2TtsModule.setVoice(1);
+  emic2TtsModule.say("Temperature. All systems go.");
+  emic2TtsModule.setVoice(voiceNumber);
   Serial.print(F("emic2 OK"));
 }
 
@@ -21,22 +32,22 @@ void setupAudio()
  * Randomizes the array of riddles
  */
 void shuffleRiddles() {
-   Serial.print(F("shuffling riddles...."));
-  for (int a = 0; a < NUM_RIDDLES; a++)
-  {
-    int r = random(a, NUM_RIDDLES - 1);
-    String temp[2] = riddles[a];
-    riddles[a][0] = riddles[r][0];
-    riddles[a][1] = riddles[r][1];
-    riddles[r][0] = temp[0];
-    riddles[r][1] = temp[1];
-//     Serial.print(F("shuffling riddle a " + String(a)));
-//     Serial.println();
-//     Serial.print(F("a0 " + String(riddles[a][0])));
-//     Serial.println();
-//     Serial.print(F("a1 " + String(riddles[a][1])));
-//     Serial.println();
-  }
+//    Serial.print(F("shuffling riddles...."));
+//   for (int a = 0; a < NUM_RIDDLES; a++)
+//   {
+//     int r = random(a, NUM_RIDDLES - 1);
+//     String temp[2] = riddles[a];
+//     riddles[a][0] = riddles[r][0];
+//     riddles[a][1] = riddles[r][1];
+//     riddles[r][0] = temp[0];
+//     riddles[r][1] = temp[1];
+// //     Serial.print(F("shuffling riddle a " + String(a)));
+// //     Serial.println();
+// //     Serial.print(F("a0 " + String(riddles[a][0])));
+// //     Serial.println();
+// //     Serial.print(F("a1 " + String(riddles[a][1])));
+// //     Serial.println();
+//   }
 }
 
 
@@ -72,22 +83,6 @@ void shuffleStates() {
 //   delay(60000);
 // }
 
-/**
-   Turns current hour and minute into text, e.g. 17:03 -> "5 oh 3";
-*/
-// String getTimeMessage(DateTime now)
-// {
-//   const String messageHour = (now.hour() > 12) ? String(now.hour() - 12) : String(now.hour());
-//   const String messageMin = (now.minute() < 10) ? "oh " + String(now.minute()) : String(now.minute());
-//   const String timeMessage = "It is " + messageHour + " " + messageMin + ".";
-//   return timeMessage;
-// }
-
-// void tellTime() {
-//  DateTime now = rtc.now();
-//  emic2TtsModule.setWordsPerMinute(110);
-//  emic2TtsModule.say(getTimeMessage(now)); 
-// }
 
 /**
    operator: plus, minus, times, divided by
@@ -98,7 +93,7 @@ void tellMath(String mathType, int limit)
   mathNumberA = random(limit + 1);
   mathNumberB = random(limit + 1);
   hasAnsweredRiddle = true;
-  hasAnsweredState = true;
+  hasAnsweredUsState = true;
 
   if (mathType == "minus")
   {
@@ -128,14 +123,38 @@ void tellMath(String mathType, int limit)
     // plus / addition
     mathAnswer = mathNumberA + mathNumberB;
   }
-  answer = "The answer is " + String(mathAnswer);
-  const String message = "What is " + String(mathNumberA) + " " + mathType + " " + String(mathNumberB);
+  const String q = String(mathNumberA) + " " + mathType + " " + String(mathNumberB);
+  const String message = "What is " + q;
+  answer = "The answer to " + q + " is " + String(mathAnswer);
   emic2TtsModule.say(message);
+  emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 
 }
 
 void tellUSState() {
-  emic2TtsModule.say("Yo was up dude");
+  emic2TtsModule.setWordsPerMinute(110);
+  hasAnsweredRiddle = true;
+  if (hasAnsweredUsState) {
+    hasAnsweredUsState = false;   
+    if (UsStateCount >= 50) {
+      UsStateCount = 0;
+      shuffleStates();
+    } else {
+      UsStateCount ++;
+    }
+  }
+  
+  question = String(getUSState(UsStateCount));
+  answer = "The capital of " + question + " is " + String(getUSCapital(UsStateCount));
+  emic2TtsModule.say("What is the capital of " + String(question));
+  emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
+
+
+
+
+
+  // emic2TtsModule.say("Yo. was up, dude");
+  // emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 //  Serial.println("Tell US state");
 //  emic2TtsModule.setWordsPerMinute(110);
 //  hasAnsweredRiddle = true;
@@ -163,7 +182,7 @@ void tellUSState() {
 
 void tellRiddle() {
   emic2TtsModule.setWordsPerMinute(110);
-  hasAnsweredState = true;
+  hasAnsweredUsState = true;
   if (hasAnsweredRiddle) {
     hasAnsweredRiddle = false;   
     if (riddleCount > NUM_RIDDLES + 1) {
@@ -172,14 +191,11 @@ void tellRiddle() {
     } else {
       riddleCount ++;
     }
-    answer = String(riddles[riddleCount][1]) + getLaugh();
-    question = String(riddles[riddleCount][0]);
-    Serial.print("** riddle ans");
-    Serial.println();
-    Serial.print(answer);
-    emic2TtsModule.say(question);
   }
-  
+  answer = String(getRiddleAnswer(riddleCount)) + getLaugh();
+  question = String(getRiddleQuestion(riddleCount));
+  emic2TtsModule.say(question);
+  emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 }
 
 /**
@@ -197,7 +213,8 @@ String getLaugh() {
  */
 void tellAnswer() {
   hasAnsweredRiddle = true;
-  hasAnsweredState = true;
+  hasAnsweredUsState = true;
   emic2TtsModule.setWordsPerMinute(80);
   emic2TtsModule.say(answer);
+  emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 }
