@@ -122,7 +122,7 @@ void tellRiddle() {
  * Returns a random laugh String
  */
 String getLaugh() {
-  const String laughs[11] = {"ha ha ha ha ha", "hee hee hee", "that was so funny", "that what hilarious", "hard dee har har", "whoo, that was a real knee slapper", "tee hee hee", "hoo hoo hee", "uh.. ok", "ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha", "el. oh. el."};
+  const String laughs[11] = {"ha ha", "hee hee hee", "that was so funny", "that what hilarious", "hard dee har har", "whoo, that was a real knee slapper", "tee hee hee", "hoo hoo hee", "uh.. ok", "ha ha ha", "el. oh. el."};
   int randomLaughNumber = random(11);
   String laugh = String(laughs[randomLaughNumber]);
   return laugh;
