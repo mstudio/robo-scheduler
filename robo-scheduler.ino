@@ -58,7 +58,7 @@ String answer;
 #define NUM_RIDDLES 25
 #define NUM_STATES 50
 int riddleCount = 0;
-int UsStateCount = 0;
+
 
 void setup () {
 
@@ -93,7 +93,7 @@ void setup () {
   Serial.print("Setup - riddles complete.");
   Serial.println();
 
-  shuffleStates();
+  shuffleUsStates();
 
   Serial.print("Setup - states complete.");
 
@@ -123,7 +123,7 @@ void loop () {
 
   buttonStateState = digitalRead(buttonStatePin);
   if (buttonStateState == LOW) {
-    tellUSState();
+    tellUsState();
   }
 
   buttonRiddleState = digitalRead(buttonRiddlePin);

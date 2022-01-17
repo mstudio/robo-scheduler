@@ -10,19 +10,19 @@ void setupAudio()
   emic2TtsModule.init();
   emic2TtsModule.setVolume(10);
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
-  emic2TtsModule.setLanguage(0);
-  emic2TtsModule.setVoice(3);
-  emic2TtsModule.say("Booting up. Checking system for");
+//  emic2TtsModule.setLanguage(0);
+//  emic2TtsModule.setVoice(3);
+//  emic2TtsModule.say("Booting up. Checking system for");
+//  emic2TtsModule.setVoice(1);
+//  emic2TtsModule.say("Power");
+//  emic2TtsModule.setVoice(3);
+//  emic2TtsModule.say("Checking system for");
+//  emic2TtsModule.setVoice(1);
+//  emic2TtsModule.say("Memory.");
+//  emic2TtsModule.setVoice(3);
+//  emic2TtsModule.say("Checking system for");
   emic2TtsModule.setVoice(1);
-  emic2TtsModule.say("Power");
-  emic2TtsModule.setVoice(3);
-  emic2TtsModule.say("Checking system for");
-  emic2TtsModule.setVoice(1);
-  emic2TtsModule.say("Memory.");
-  emic2TtsModule.setVoice(3);
-  emic2TtsModule.say("Checking system for");
-  emic2TtsModule.setVoice(1);
-  emic2TtsModule.say("Temperature. All systems go.");
+  emic2TtsModule.say("All systems go.");
   emic2TtsModule.setVoice(voiceNumber);
   Serial.print(F("emic2 OK"));
 }
@@ -50,38 +50,6 @@ void shuffleRiddles() {
 //   }
 }
 
-
-/**
- * Randomizes the array of states
- */
-void shuffleStates() {
-//  Serial.print(F("shuffle states. "));
-//  for (int a = 0; a < 2; a++)
-//  {
-//    int r = random(a, 2);
-//    String temp[2] = USStates[a];
-//    USStates[a][0] = USStates[r][0];
-//    USStates[a][1] = USStates[r][1];
-//    USStates[r][0] = temp[0];
-//    USStates[r][1] = temp[1];
-////    Serial.print("shuffling state a " + String(a));
-////    Serial.println();
-//  }
-//  Serial.print(F("shuffle states done. "));
-}
-
-/**
-   Pronounce the actual message audio using emic2 module.
-   Then wait 1 minute so that the message does not repeat on the next loop.
-*/
-// void sayMessage(String message)
-// {
-//   Serial.print("say message: ");
-//   Serial.print(message);
-//   emic2TtsModule.say(message);
-
-//   delay(60000);
-// }
 
 
 /**
@@ -129,54 +97,6 @@ void tellMath(String mathType, int limit)
   emic2TtsModule.say(message);
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 
-}
-
-void tellUSState() {
-  emic2TtsModule.setWordsPerMinute(110);
-  hasAnsweredRiddle = true;
-  if (hasAnsweredUsState) {
-    hasAnsweredUsState = false;   
-    if (UsStateCount >= 50) {
-      UsStateCount = 0;
-      shuffleStates();
-    } else {
-      UsStateCount ++;
-    }
-  }
-  
-  question = String(getUSState(UsStateCount));
-  answer = "The capital of " + question + " is " + String(getUSCapital(UsStateCount));
-  emic2TtsModule.say("What is the capital of " + String(question));
-  emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
-
-
-
-
-
-  // emic2TtsModule.say("Yo. was up, dude");
-  // emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
-//  Serial.println("Tell US state");
-//  emic2TtsModule.setWordsPerMinute(110);
-//  hasAnsweredRiddle = true;
-//  Serial.println("telling state");
-//  if (hasAnsweredState) {
-//    Serial.println("telling state 2");
-//    hasAnsweredState = false;   
-//    if (stateCount > 48) {
-//      stateCount = 0;
-//      shuffleStates();
-//    } else {
-//      stateCount ++;
-//    }
-//    answer = String(USStates[stateCount][1]);
-//    question = String(USStates[stateCount][0]);
-//    Serial.println("state count: " + String(stateCount));
-//    Serial.println("question:");
-//    Serial.print(String(question));
-//    const String message = "What is the capital of " + String(question);
-//    emic2TtsModule.say(message);
-//  }
-  
 }
 
 

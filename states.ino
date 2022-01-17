@@ -1,5 +1,10 @@
 // US States and Capitals
 
+// This array will be shuffled into a random order
+int shuffledUsStateOrder[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49 };
+int usStateTotal = 50;
+int usStateIndex = 0;
+
 const char us_q1[] PROGMEM = "Alabama";
 const char us_q2[] PROGMEM = "Alaska";
 const char us_q3[] PROGMEM = "Arizona";
@@ -102,14 +107,37 @@ const char us_a48[] PROGMEM = "Charleston";
 const char us_a49[] PROGMEM = "Madison";
 const char us_a50[] PROGMEM = "Cheyenne";
 
-const char * const USQuestions[] PROGMEM = {us_q1,us_q2,us_q3,us_q4,us_q5,us_q6,us_q7,us_q8,us_q9,us_q10,us_q11,us_q12,us_q13,us_q14,us_q15,us_q16,us_q17,us_q18,us_q19,us_q20,us_q21,us_q22,us_q23,us_q24,us_q25,us_q26,us_q27,us_q28,us_q29,us_q30,us_q31,us_q32,us_q33,us_q34,us_q35,us_q36,us_q37,us_q38,us_q39,us_q40,us_q41,us_q42,us_q43,us_q44,us_q45,us_q46,us_q47,us_q48,us_q49,us_q50};
+const char * const UsQuestions[] PROGMEM = {us_q1,us_q2,us_q3,us_q4,us_q5,us_q6,us_q7,us_q8,us_q9,us_q10,us_q11,us_q12,us_q13,us_q14,us_q15,us_q16,us_q17,us_q18,us_q19,us_q20,us_q21,us_q22,us_q23,us_q24,us_q25,us_q26,us_q27,us_q28,us_q29,us_q30,us_q31,us_q32,us_q33,us_q34,us_q35,us_q36,us_q37,us_q38,us_q39,us_q40,us_q41,us_q42,us_q43,us_q44,us_q45,us_q46,us_q47,us_q48,us_q49,us_q50};
 
-const char * const USAnswers[] PROGMEM = {us_a1,us_a2,us_a3,us_a4,us_a5,us_a6,us_a7,us_a8,us_a9,us_a10,us_a11,us_a12,us_a13,us_a14,us_a15,us_a16,us_a17,us_a18,us_a19,us_a20,us_a21,us_a22,us_a23,us_a24,us_a25,us_a26,us_a27,us_a28,us_a29,us_a30,us_a31,us_a32,us_a33,us_a34,us_a35,us_a36,us_a37,us_a38,us_a39,us_a40,us_a41,us_a42,us_a43,us_a44,us_a45,us_a46,us_a47,us_a48,us_a49,us_a50};
+const char * const UsAnswers[] PROGMEM = {us_a1,us_a2,us_a3,us_a4,us_a5,us_a6,us_a7,us_a8,us_a9,us_a10,us_a11,us_a12,us_a13,us_a14,us_a15,us_a16,us_a17,us_a18,us_a19,us_a20,us_a21,us_a22,us_a23,us_a24,us_a25,us_a26,us_a27,us_a28,us_a29,us_a30,us_a31,us_a32,us_a33,us_a34,us_a35,us_a36,us_a37,us_a38,us_a39,us_a40,us_a41,us_a42,us_a43,us_a44,us_a45,us_a46,us_a47,us_a48,us_a49,us_a50};
 
-String getUSState(int i) {
-  return (__FlashStringHelper *)pgm_read_word(&USQuestions[i]);
+String getUsState(int i) {
+  return (__FlashStringHelper *)pgm_read_word(&UsQuestions[i]);
 }
 
-String getUSCapital(int i) {
-  return (__FlashStringHelper *)pgm_read_word(&USAnswers[i]);
+String getUsCapital(int i) {
+  return (__FlashStringHelper *)pgm_read_word(&UsAnswers[i]);
+}
+
+void tellUsState() {
+  emic2TtsModule.setWordsPerMinute(110);
+  hasAnsweredRiddle = true;
+  if (hasAnsweredUsState) {
+    hasAnsweredUsState = false;   
+    if (usStateIndex >= 50) {
+      usStateIndex = 0;
+      shuffleUsStates();
+    } else {
+      usStateIndex ++;
+    }
+  }
+  
+  question = String(getUsState(shuffledUsStateOrder[usStateIndex]));
+  answer = "The capital of " + question + " is " + String(getUsCapital(shuffledUsStateOrder[usStateIndex]));
+  emic2TtsModule.say("What is the capital of " + String(question));
+  emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);  
+}
+
+void shuffleUsStates() {
+  scrambleArray(shuffledUsStateOrder, usStateTotal);
 }

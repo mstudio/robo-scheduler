@@ -4,14 +4,14 @@ void changeVoice() {
   voiceNumber = voiceNumber + 1;
 
   if (voiceNumber > 8) {
-    voiceNumber = 1;
+    voiceNumber = 0;
   }
 
   const String robotName = "";
 
   switch (voiceNumber) {
     case 0:
-      robotName = "Mister Perfect";
+      robotName = "bozo. man";
       break;
     case 1:
       robotName = "FFreddy";
@@ -35,7 +35,7 @@ void changeVoice() {
       robotName = "Filbert";
       break;
     case 8:
-      robotName = "Whispering Wendy";
+      robotName = "HOBO. MAN";
       break;
     default:
       break;
