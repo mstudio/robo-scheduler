@@ -23,6 +23,7 @@ void setupAudio()
 //  emic2TtsModule.say("Checking system for");
   emic2TtsModule.setVoice(1);
   emic2TtsModule.say("All systems go.");
+  emic2TtsModule.say("Virginia");
   emic2TtsModule.setVoice(voiceNumber);
   Serial.print(F("emic2 OK"));
 }
