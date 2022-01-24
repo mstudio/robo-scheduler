@@ -5,8 +5,6 @@ int shuffledUsStateOrder[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
 int usStateTotal = 50;
 int usStateIndex = 0;
 
-
-
 const char us_q1[] PROGMEM = "Ala bama";
 const char us_q2[] PROGMEM = "ah la ska";
 const char us_q3[] PROGMEM = "Arizona";
@@ -60,7 +58,7 @@ const char us_q50[] PROGMEM = "Wy oming";
 
 const char us_a1[] PROGMEM = "Montgomery";
 const char us_a2[] PROGMEM = "Joo No";
-const char us_a3[] PROGMEM = "Fee nicks";
+const char us_a3[] PROGMEM = "Fee nix";
 const char us_a4[] PROGMEM = "Little Rock";
 const char us_a5[] PROGMEM = "Sacramento";
 const char us_a6[] PROGMEM = "Denver";
@@ -104,10 +102,10 @@ const char us_a43[] PROGMEM = "Austin";
 const char us_a44[] PROGMEM = "Salt Lake City";
 const char us_a45[] PROGMEM = "Mont peel yer";
 const char us_a46[] PROGMEM = "Richmond";
-const char us_a47[] PROGMEM = "Olympia";
+const char us_a47[] PROGMEM = "O limp eea";
 const char us_a48[] PROGMEM = "Charls ten";
 const char us_a49[] PROGMEM = "Madison";
-const char us_a50[] PROGMEM = "shian";
+const char us_a50[] PROGMEM = "SHI AN";
 
 const char * const UsQuestions[] PROGMEM = {us_q1,us_q2,us_q3,us_q4,us_q5,us_q6,us_q7,us_q8,us_q9,us_q10,us_q11,us_q12,us_q13,us_q14,us_q15,us_q16,us_q17,us_q18,us_q19,us_q20,us_q21,us_q22,us_q23,us_q24,us_q25,us_q26,us_q27,us_q28,us_q29,us_q30,us_q31,us_q32,us_q33,us_q34,us_q35,us_q36,us_q37,us_q38,us_q39,us_q40,us_q41,us_q42,us_q43,us_q44,us_q45,us_q46,us_q47,us_q48,us_q49,us_q50};
 
@@ -126,7 +124,7 @@ void tellUsState() {
   hasAnsweredRiddle = true;
   if (hasAnsweredUsState) {
     hasAnsweredUsState = false;   
-    if (usStateIndex >= 50) {
+    if (usStateIndex >= 49) {
       usStateIndex = 0;
       shuffleUsStates();
     } else {

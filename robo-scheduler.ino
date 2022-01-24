@@ -54,24 +54,14 @@ int mathAnswer;
 String question;
 String answer;
 
-// Riddles/States
-#define NUM_RIDDLES 25
-#define NUM_STATES 50
-int riddleCount = 0;
-
-
 void setup () {
 
   Serial.begin(9600);
-
   delay(1000); // wait for console opening
-
   randomSeed(analogRead(0));
 
   Serial.print(F("Setup - random seed complete."));
   Serial.println();
-
-  getRiddleQuestion(2);
 
   // initialize the LED pin as an output for testing:
   pinMode(ledPin, OUTPUT);
