@@ -67,9 +67,10 @@ void tellMath(String mathType, int limit)
  * Returns a random laugh String
  */
 String getLaugh() {
-  const String laughs[11] = {"ha ha", "hee hee hee", "that was so funny", "that what hilarious", "hard dee har har", "whoo, that was a real knee slapper", "tee hee hee", "hoo hoo hee", "uh.. ok", "ha ha ha", "el. oh. el."};
+  const String laughs[11] = {"ha ha", "hee hee hee", "that was so funny", "that what hilarious", "hard dee har har", "whoo, that was a real knee slapper", "HA HA HA HA HA HA Ha hA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA", "hoo hoo hee", "uh.. ok", "ha ha ha", "el. oh. el."};
   int randomLaughNumber = random(11);
   String laugh = String(laughs[randomLaughNumber]);
+//  String laugh = String(laughs[6]);
   return laugh;
 }
 
@@ -81,5 +82,16 @@ void tellAnswer() {
   hasAnsweredUsState = true;
   emic2TtsModule.setWordsPerMinute(80);
   emic2TtsModule.say(answer);
+  emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
+}
+
+
+/**
+ * Tell to close door
+ */
+void tellToCloseDoor() {
+  emic2TtsModule.setVoice(6);
+  emic2TtsModule.setWordsPerMinute(80);
+  emic2TtsModule.say("CLOSE THE DOOR NOW OR ELSE. . .");
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 }

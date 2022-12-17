@@ -17,7 +17,7 @@ void changeVoice() {
       robotName = "FFreddy";
       break;
     case 2:
-      robotName = "Eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lie ja";
+      robotName = "Eeeeeeeeeeeeeeeeeeeeee lie ja";
       break;
     case 3:
       robotName = "Pop, corn";

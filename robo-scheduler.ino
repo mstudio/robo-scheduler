@@ -36,6 +36,7 @@ const int buttonStatePin = 5;
 const int buttonRiddlePin = 6;
 const int buttonAnswerPin = 7;
 const int buttonVoicePin = 8;
+const int switchDoorPin = 9;
 const int ledPin =  13;
 int buttonPlusState = 1;
 int buttonMinusState = 1;
@@ -44,6 +45,7 @@ int buttonStateState = 1;
 int buttonRiddleState = 1;
 int buttonAnswerState = 1;
 int buttonVoiceState = 1;
+int switchDoorState = 1;
 
 // math/riddles
 boolean hasAnsweredRiddle = true;
@@ -74,6 +76,7 @@ void setup () {
   pinMode(buttonRiddlePin, INPUT_PULLUP);
   pinMode(buttonAnswerPin, INPUT_PULLUP);
   pinMode(buttonVoicePin, INPUT_PULLUP);
+  pinMode(switchDoorPin, INPUT_PULLUP);
 
   Serial.print("Setup - button setup complete.");
   Serial.println();
@@ -113,7 +116,10 @@ void loop () {
 
   buttonStateState = digitalRead(buttonStatePin);
   if (buttonStateState == LOW) {
+    Serial.print("capital button is LOW");
     tellUsState();
+  } else {
+    Serial.print("capital button is HIGH");
   }
 
   buttonRiddleState = digitalRead(buttonRiddlePin);
@@ -129,6 +135,18 @@ void loop () {
   buttonVoiceState = digitalRead(buttonVoicePin);
   if (buttonVoiceState == LOW) {
     changeVoice();
+  }
+  
+  switchDoorState = digitalRead(switchDoorPin);
+  if (switchDoorState == LOW) {
+    Serial.print("switchDoorState is low.");
+    Serial.println();
+  }
+   if (switchDoorState == HIGH) {
+    Serial.print("switchDoorState is high.");
+    Serial.println();
+//    delay(30000);
+    tellToCloseDoor(); 
   }
   delay(10);
 }

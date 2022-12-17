@@ -5,7 +5,7 @@ int RiddleIndex = 0;
 const char Riddle_q1[] PROGMEM = "Which letter of the alphabet has the most water?";
 const char Riddle_a1[] PROGMEM = "C";
 const char Riddle_q2[] PROGMEM = "What kind of dog keeps the best time?";
-const char Riddle_a2[] PROGMEM = "Watchdog";
+const char Riddle_a2[] PROGMEM = "A Watch Dog";
 const char Riddle_q3[] PROGMEM = "What time of day, when written in a capital letters, is the same forwards, backwards and upside down?";
 const char Riddle_a3[] PROGMEM = "Noon";
 const char Riddle_q4[] PROGMEM = "If you were in a race and passed the person in second place, what place would you be in?";
@@ -228,10 +228,10 @@ void shuffleRiddles() {
 
 /**
  * Returns a random laugh String
- */
-String getLaugh() {
-  const String laughs[11] = {"ha ha", "hee hee hee", "that was so a good one", "that what pretty clever", "hard dee har har", "whoo, that was a real brain teaser", "golly, my brain hurts after that one", "hoo hoo hee", "uh.. ok", "ha ha ha", "el. oh. el."};
-  int randomLaughNumber = random(11);
-  String laugh = String(laughs[randomLaughNumber]);
-  return laugh;
-}
+// */
+//String getLaugh() {
+//  const String laughs[11] = {"ha ha", "hee hee hee", "that was so a good one", "that what pretty clever", "hard dee har har", "whoo, that was a real brain teaser", "golly, my brain hurts after that one", "hoo hoo hee", "uh.. ok", "ha ha ha", "el. oh. el."};
+//  int randomLaughNumber = random(11);
+//  String laugh = String(laughs[randomLaughNumber]);
+//  return laugh;
+//}
