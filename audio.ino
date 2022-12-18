@@ -62,22 +62,23 @@ void tellMath(String mathType, int limit)
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 }
 
-
 /**
  * Returns a random laugh String
  */
-String getLaugh() {
-  const String laughs[11] = {"ha ha", "hee hee hee", "that was so funny", "that what hilarious", "hard dee har har", "whoo, that was a real knee slapper", "HA HA HA HA HA HA Ha hA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA", "hoo hoo hee", "uh.. ok", "ha ha ha", "el. oh. el."};
+String getLaugh()
+{
+  const String laughs[11] = {"ha ha", "hee hee hee", "that was so funny", "that what hilarious", "hard dee har har", "whoo, that was a real knee slapper", "HA HA", "hoo hoo hee", "uh.. ok", "ha ha ha", "el. oh. el."};
   int randomLaughNumber = random(11);
   String laugh = String(laughs[randomLaughNumber]);
-//  String laugh = String(laughs[6]);
+  //  String laugh = String(laughs[6]);
   return laugh;
 }
 
 /**
  * Answer to riddle or math question
  */
-void tellAnswer() {
+void tellAnswer()
+{
   hasAnsweredRiddle = true;
   hasAnsweredUsState = true;
   emic2TtsModule.setWordsPerMinute(80);
@@ -85,13 +86,22 @@ void tellAnswer() {
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 }
 
-
 /**
  * Tell to close door
  */
-void tellToCloseDoor() {
+void tellToCloseDoor()
+{
   emic2TtsModule.setVoice(6);
   emic2TtsModule.setWordsPerMinute(80);
-  emic2TtsModule.say("CLOSE THE DOOR NOW OR ELSE. . .");
+  emic2TtsModule.say("Please close the door.");
+  emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
+}
+
+void thankForClosingDoor(unsigned long sec)
+{
+  emic2TtsModule.setVoice(1);
+  emic2TtsModule.setWordsPerMinute(80);
+  const String msg = "It took you " + String(sec) " seconds.";
+  emic2TtsModule.say("Thank you for closing the door.");
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 }

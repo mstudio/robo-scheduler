@@ -37,7 +37,7 @@ const int buttonRiddlePin = 6;
 const int buttonAnswerPin = 7;
 const int buttonVoicePin = 8;
 const int switchDoorPin = 9;
-const int ledPin =  13;
+const int ledPin = 13;
 int buttonPlusState = 1;
 int buttonMinusState = 1;
 int buttonTimesState = 1;
@@ -56,7 +56,14 @@ int mathAnswer;
 String question;
 String answer;
 
-void setup () {
+// door
+boolean doorOpen = false;
+unsigned long doorOpenStartTime = 0;
+unsigned long doorOpenTestTime = 0
+
+    void
+    setup()
+{
 
   Serial.begin(9600);
   delay(1000); // wait for console opening
@@ -80,7 +87,7 @@ void setup () {
 
   Serial.print("Setup - button setup complete.");
   Serial.println();
- 
+
   shuffleRiddles();
 
   Serial.print("Setup - riddles complete.");
@@ -96,58 +103,104 @@ void setup () {
   Serial.println();
 }
 
-void loop () {
-
+void loop()
+{
   // read the state of the pushbutton value:
   buttonPlusState = digitalRead(buttonPlusPin);
-  if (buttonPlusState == LOW) {
+  if (buttonPlusState == LOW)
+  {
     tellMath("plus", 100);
   }
 
   buttonMinusState = digitalRead(buttonMinusPin);
-  if (buttonMinusState == LOW) {
+  if (buttonMinusState == LOW)
+  {
     tellMath("minus", 100);
   }
 
   buttonTimesState = digitalRead(buttonTimesPin);
-  if (buttonTimesState == LOW) {
+  if (buttonTimesState == LOW)
+  {
     tellMath("times", 12);
   }
 
   buttonStateState = digitalRead(buttonStatePin);
-  if (buttonStateState == LOW) {
+  if (buttonStateState == LOW)
+  {
     Serial.print("capital button is LOW");
     tellUsState();
-  } else {
+  }
+  else
+  {
     Serial.print("capital button is HIGH");
   }
 
   buttonRiddleState = digitalRead(buttonRiddlePin);
-  if (buttonRiddleState == LOW) {
+  if (buttonRiddleState == LOW)
+  {
     tellRiddle();
   }
 
   buttonAnswerState = digitalRead(buttonAnswerPin);
-  if (buttonAnswerState == LOW) {
+  if (buttonAnswerState == LOW)
+  {
     tellAnswer();
   }
 
   buttonVoiceState = digitalRead(buttonVoicePin);
-  if (buttonVoiceState == LOW) {
+  if (buttonVoiceState == LOW)
+  {
     changeVoice();
   }
-  
+
   switchDoorState = digitalRead(switchDoorPin);
-  if (switchDoorState == LOW) {
-    Serial.print("switchDoorState is low.");
-    Serial.println();
+  // LOW: door is closed
+  if (switchDoorState == LOW)
+  {
+    // if door was open, thank user for closing it.
+    if (doorOpen)
+    {
+      doorOpen = false;
+      unsigned long timeDeltaSec = getTimeDelta(doorOpenStartTime, millis());
+      Serial.print("Closed door: ");
+      Serial.print(timeDeltaSec);
+      Serial.print("sec");
+      Serial.println();
+      thankForClosingDoor(timeDeltaSec);
+    }
+
+    // Serial.print("switchDoorState is low.");
+    // Serial.println();
   }
-   if (switchDoorState == HIGH) {
-    Serial.print("switchDoorState is high.");
-    Serial.println();
-//    delay(30000);
-    tellToCloseDoor(); 
+
+  // HIGH: door is open
+  if (switchDoorState == HIGH)
+  {
+    // Serial.print("switchDoorState is high.");
+    // Serial.println();
+    if (doorOpen)
+    {
+      // get change in time (ms)
+      unsigned long timeDeltaSec = getTimeDelta(doorOpenTestTime, millis());
+      Serial.print("Door Seconds: ");
+      Serial.print(timeDeltaSec);
+      Serial.println();
+
+      if (timeDeltaSec >= 10)
+      {
+        Serial.print("Tell user to close door");
+        tellToCloseDoor();
+        // reset timer for another loop
+        doorOpenTestTime = millis();
+      }
+    }
+    else
+    {
+      // start doorOpen timer
+      doorOpen = true;
+      doorOpenTestTime = millis();
+      doorOpenStartTime = millis();
+    }
   }
   delay(10);
 }
-

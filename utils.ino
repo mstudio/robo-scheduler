@@ -10,11 +10,11 @@
 // Released to the public domain
 //
 
-void scrambleArray(int * array, int size)
+void scrambleArray(int *array, int size)
 {
   int last = 0;
   int temp = array[last];
-  for (int i=0; i<size; i++)
+  for (int i = 0; i < size; i++)
   {
     int index = random(size);
     array[last] = array[index];
@@ -23,8 +23,15 @@ void scrambleArray(int * array, int size)
   array[last] = temp;
 }
 
-/** 
- * 
+unsigned long getTimeDelta(unsigned long startTime, unsigned long nowTime)
+{
+  unsigned long timeDelta = nowTime - startTime;
+  unsigned long timeDeltaSec = timeDelta / 1000;
+  return timeDeltaSec;
+}
+
+/**
+ *
  * JS to generate
  let output = '';
 for (var i = 0; i<=49; i++) {
