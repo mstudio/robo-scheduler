@@ -11,31 +11,31 @@ void changeVoice() {
 
   switch (voiceNumber) {
     case 0:
-      robotName = "bozo. man";
+      robotName = "bozo";
       break;
     case 1:
-      robotName = "FFreddy";
+      robotName = "Freddy";
       break;
     case 2:
-      robotName = "Eeeeeeeeeeeeeeeeeeeeee lie ja";
+      robotName = "Ee lie ja";
       break;
     case 3:
-      robotName = "Pop, corn";
+      robotName = "Pop corn";
       break;
     case 4:
       robotName = "Professor, Higgins";
       break;
     case 5:
-      robotName = "Spoiled. brat";
+      robotName = "Jimbo";
       break;
     case 6:
-      robotName = "Mister. Boring";
+      robotName = "Mister Boring";
       break;
     case 7:
       robotName = "Filbert";
       break;
     case 8:
-      robotName = "HOBO. MAN";
+      robotName = "super man";
       break;
     default:
       break;

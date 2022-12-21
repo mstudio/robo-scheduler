@@ -21,7 +21,7 @@ void setupAudio()
 */
 void tellMath(String mathType, int limit)
 {
-  emic2TtsModule.setWordsPerMinute(110);
+  emic2TtsModule.setWordsPerMinute(160);
   mathNumberA = random(limit + 1);
   mathNumberB = random(limit + 1);
   hasAnsweredRiddle = true;
@@ -91,17 +91,29 @@ void tellAnswer()
  */
 void tellToCloseDoor()
 {
-  emic2TtsModule.setVoice(6);
-  emic2TtsModule.setWordsPerMinute(80);
+  emic2TtsModule.setVoice(1);
+  emic2TtsModule.setWordsPerMinute(200);
   emic2TtsModule.say("Please close the door.");
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 }
 
-void thankForClosingDoor(unsigned long sec)
+void thankForClosingDoor(float sec)
 {
   emic2TtsModule.setVoice(1);
-  emic2TtsModule.setWordsPerMinute(80);
-  const String msg = "It took you " + String(sec) " seconds.";
-  emic2TtsModule.say("Thank you for closing the door.");
+  emic2TtsModule.setWordsPerMinute(200);
+  if (sec < 10) {
+    const String praise = getPraise();
+    int r = random(2);
+    // vary the wording a bit...
+    String msg;
+    if (r < 1) {
+     msg = String(praise) + ". You closed the door in " + String(sec) + " seconds.";
+    } else {
+      msg = String(praise) + ". It only took you " + String(sec) + " seconds to close the door.";
+    }
+    emic2TtsModule.say(msg);
+  } else {
+    emic2TtsModule.say("Thank you very much.");
+  }
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 }

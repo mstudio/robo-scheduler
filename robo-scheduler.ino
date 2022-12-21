@@ -32,7 +32,7 @@ const int defaultVoiceSpeed = 200;
 const int buttonPlusPin = 2;
 const int buttonMinusPin = 3;
 const int buttonTimesPin = 4;
-const int buttonStatePin = 5;
+const int buttonStatePin = 12;
 const int buttonRiddlePin = 6;
 const int buttonAnswerPin = 7;
 const int buttonVoicePin = 8;
@@ -59,11 +59,9 @@ String answer;
 // door
 boolean doorOpen = false;
 unsigned long doorOpenStartTime = 0;
-unsigned long doorOpenTestTime = 0
+unsigned long doorOpenTestTime = 0;
 
-    void
-    setup()
-{
+void setup() {
 
   Serial.begin(9600);
   delay(1000); // wait for console opening
@@ -127,12 +125,14 @@ void loop()
   buttonStateState = digitalRead(buttonStatePin);
   if (buttonStateState == LOW)
   {
-    Serial.print("capital button is LOW");
     tellUsState();
+    Serial.print("capital button is low");
+    Serial.println();
   }
   else
   {
     Serial.print("capital button is HIGH");
+    Serial.println();
   }
 
   buttonRiddleState = digitalRead(buttonRiddlePin);
@@ -161,27 +161,22 @@ void loop()
     if (doorOpen)
     {
       doorOpen = false;
-      unsigned long timeDeltaSec = getTimeDelta(doorOpenStartTime, millis());
-      Serial.print("Closed door: ");
-      Serial.print(timeDeltaSec);
-      Serial.print("sec");
-      Serial.println();
+      float timeDeltaSec = getTimeDelta(doorOpenStartTime, millis());
+      // Serial.print("Closed door: ");
+      // Serial.print(timeDeltaSec);
+      // Serial.print("sec");
+      // Serial.println();
       thankForClosingDoor(timeDeltaSec);
     }
-
-    // Serial.print("switchDoorState is low.");
-    // Serial.println();
   }
 
   // HIGH: door is open
   if (switchDoorState == HIGH)
   {
-    // Serial.print("switchDoorState is high.");
-    // Serial.println();
     if (doorOpen)
     {
       // get change in time (ms)
-      unsigned long timeDeltaSec = getTimeDelta(doorOpenTestTime, millis());
+      float timeDeltaSec = getTimeDelta(doorOpenTestTime, millis());
       Serial.print("Door Seconds: ");
       Serial.print(timeDeltaSec);
       Serial.println();

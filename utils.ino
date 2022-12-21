@@ -23,11 +23,25 @@ void scrambleArray(int *array, int size)
   array[last] = temp;
 }
 
-unsigned long getTimeDelta(unsigned long startTime, unsigned long nowTime)
+/**
+ * @returns time difference, in seconds
+ */
+float getTimeDelta(unsigned long startTime, unsigned long nowTime)
 {
   unsigned long timeDelta = nowTime - startTime;
-  unsigned long timeDeltaSec = timeDelta / 1000;
+  float timeDeltaSec = timeDelta / 1000.0;
   return timeDeltaSec;
+}
+
+/**
+ * @returns a random phrase
+ */
+String getPraise() {
+  const String praiseArray[12] = {"Great job", "Nice Job", "Excellent", "Well done", "Nice work", "You rock", "Fantastic", "Super", "Terrific", "Outstanding", "Way to go", "You are. a. jem"};
+  int i = random(12);
+  Serial.print(i);
+  Serial.println();
+  return praiseArray[i];
 }
 
 /**
