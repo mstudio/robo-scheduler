@@ -92,15 +92,10 @@ void tellToCloseDoor()
 {
   emic2TtsModule.setVoice(4);
   emic2TtsModule.setWordsPerMinute(250);
-  emic2TtsModule.say(getThanks());
+  emic2TtsModule.say(getAttention() + "Please close the cabinet.");
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 }
 
-String getThanks()
-{
-  const String thanks[9]={"Thank you very much.", "Thanks.", "Danka.", "Thanks, champ.", "Well done.", "Finally. sheesh.", "Took ya long enough.", "Thanks, dude.", "I'm not, your maid."};
-  return String(thanks[random(9)]);
-}
 
 void thankForClosingDoor(float sec)
 {
@@ -118,7 +113,7 @@ void thankForClosingDoor(float sec)
     }
     emic2TtsModule.say(msg);
   } else {
-    emic2TtsModule.say(getThanks());
+    emic2TtsModule.say(getThanks() + ". It took you " + String(sec) + " seconds to close the cabinet.");
   }
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 }

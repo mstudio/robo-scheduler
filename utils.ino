@@ -44,6 +44,18 @@ String getPraise() {
   return praiseArray[i];
 }
 
+String getThanks()
+{
+  const String thanks[9]={"Thank you very much.", "Thanks.", "Danka.", "Thanks, champ.", "Well done.", "Finally. sheesh.", "Took ya long enough.", "Thanks, dude.", "I'm not, your maid."};
+  return String(thanks[random(9)]);
+}
+
+String getAttention() {
+  const String attArray[9] = {"Excuse me..", "Is anyone out there?", "Hello?", "Hey there..", "Is anyone listening?", "Come on..", "Attention..", "Alert. Alert..", "This is a public, service announcement.."};
+  return attArray[random(9)];
+}
+
+
 /**
  *
  * JS to generate
