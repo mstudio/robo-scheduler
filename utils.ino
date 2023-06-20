@@ -37,7 +37,7 @@ float getTimeDelta(unsigned long startTime, unsigned long nowTime)
  * @returns a random phrase
  */
 String getPraise() {
-  const String praiseArray[12] = {"Great job", "Nice Job", "Excellent", "Well done", "Nice work", "You rock", "Fantastic", "Super", "Terrific", "Outstanding", "Way to go", "You are. a. jem"};
+  const String praiseArray[12] = {"Great job", "Nice Job", "Excellent", "Well done", "Nice work", "Wow", "Fantastic", "Super", "Terrific", "Outstanding", "Way to go", "Wa wa, we wa."};
   int i = random(12);
   Serial.print(i);
   Serial.println();

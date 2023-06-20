@@ -9,10 +9,9 @@ void setupAudio()
   emic2Serial.begin(9600);
   emic2TtsModule.init();
   emic2TtsModule.setVolume(10);
-  emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
-  emic2TtsModule.setVoice(1);
-  emic2TtsModule.say("All systems go.");
-  emic2TtsModule.setVoice(voiceNumber);
+  emic2TtsModule.setVoice(4);
+  emic2TtsModule.setWordsPerMinute(250);
+  emic2TtsModule.say("Powering, up.. Battery. Check. Processor. Check. Sassy ness. Check.");
   Serial.print(F("emic2 OK"));
 }
 
@@ -91,29 +90,35 @@ void tellAnswer()
  */
 void tellToCloseDoor()
 {
-  emic2TtsModule.setVoice(1);
-  emic2TtsModule.setWordsPerMinute(200);
-  emic2TtsModule.say("Please close the door.");
+  emic2TtsModule.setVoice(4);
+  emic2TtsModule.setWordsPerMinute(250);
+  emic2TtsModule.say(getThanks());
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
+}
+
+String getThanks()
+{
+  const String thanks[9]={"Thank you very much.", "Thanks.", "Danka.", "Thanks, champ.", "Well done.", "Finally. sheesh.", "Took ya long enough.", "Thanks, dude.", "I'm not, your maid."};
+  return String(thanks[random(9)]);
 }
 
 void thankForClosingDoor(float sec)
 {
-  emic2TtsModule.setVoice(1);
+  // emic2TtsModule.setVoice(1);
   emic2TtsModule.setWordsPerMinute(200);
-  if (sec < 10) {
+  if (sec < 5) {
     const String praise = getPraise();
     int r = random(2);
     // vary the wording a bit...
     String msg;
     if (r < 1) {
-     msg = String(praise) + ". You closed the door in " + String(sec) + " seconds.";
+     msg = String(praise) + ". You closed the cabinet in " + String(sec) + " seconds.";
     } else {
-      msg = String(praise) + ". It only took you " + String(sec) + " seconds to close the door.";
+      msg = String(praise) + ". It only took you " + String(sec) + " seconds to close the cabinet.";
     }
     emic2TtsModule.say(msg);
   } else {
-    emic2TtsModule.say("Thank you very much.");
+    emic2TtsModule.say(getThanks());
   }
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 }
