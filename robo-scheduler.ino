@@ -45,7 +45,6 @@ int buttonStateState = 1;
 int buttonRiddleState = 1;
 int buttonAnswerState = 1;
 int buttonVoiceState = 1;
-int switchDoorState = 1;
 
 // math/riddles
 boolean hasAnsweredRiddle = true;
@@ -61,7 +60,8 @@ boolean doorOpen = false;
 unsigned long doorOpenStartTime = 0;
 unsigned long doorOpenTestTime = 0;
 
-void setup() {
+void setup()
+{
 
   Serial.begin(9600);
   delay(1000); // wait for console opening

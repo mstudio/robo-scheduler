@@ -9,9 +9,10 @@ void setupAudio()
   emic2Serial.begin(9600);
   emic2TtsModule.init();
   emic2TtsModule.setVolume(10);
-  emic2TtsModule.setVoice(4);
-  emic2TtsModule.setWordsPerMinute(250);
-  emic2TtsModule.say("Powering, up.. Battery. Check. Processor. Check. Sassy ness. Check.");
+  emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
+  emic2TtsModule.setVoice(1);
+  emic2TtsModule.say("All systems go.");
+  emic2TtsModule.setVoice(voiceNumber);
   Serial.print(F("emic2 OK"));
 }
 
@@ -74,7 +75,9 @@ String getLaugh()
 }
 
 /**
- * Answer to riddle or math question
+ * @brief
+ *
+ * @return * Answer
  */
 void tellAnswer()
 {
@@ -90,30 +93,40 @@ void tellAnswer()
  */
 void tellToCloseDoor()
 {
-  emic2TtsModule.setVoice(4);
-  emic2TtsModule.setWordsPerMinute(250);
-  emic2TtsModule.say(getAttention() + "Please close the cabinet.");
+  emic2TtsModule.setVoice(1);
+  emic2TtsModule.setWordsPerMinute(200);
+  emic2TtsModule.say(getThanks());
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 }
 
+String getThanks()
+{
+  const String thanks[9] = {"Thank you very much.", "Graseeus.", "Danka.", "Thanks, champ.", "Well done.", "Finally.", "Took ya long enough.", "How do you say thank you in Russian?", "I'm not your maid."};
+}
 
 void thankForClosingDoor(float sec)
 {
-  // emic2TtsModule.setVoice(1);
+  emic2TtsModule.setVoice(1);
   emic2TtsModule.setWordsPerMinute(200);
-  if (sec < 5) {
+  if (sec < 10)
+  {
     const String praise = getPraise();
     int r = random(2);
     // vary the wording a bit...
     String msg;
-    if (r < 1) {
-     msg = String(praise) + ". You closed the cabinet in " + String(sec) + " seconds.";
-    } else {
+    if (r < 1)
+    {
+      msg = String(praise) + ". You closed the cabinet in " + String(sec) + " seconds.";
+    }
+    else
+    {
       msg = String(praise) + ". It only took you " + String(sec) + " seconds to close the cabinet.";
     }
     emic2TtsModule.say(msg);
-  } else {
-    emic2TtsModule.say(getThanks() + ". It took you " + String(sec) + " seconds to close the cabinet.");
+  }
+  else
+  {
+    emic2TtsModule.say(getThanks());
   }
   emic2TtsModule.setWordsPerMinute(defaultVoiceSpeed);
 }
